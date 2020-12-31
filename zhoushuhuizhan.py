@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import os
 from urllib.parse import urlparse
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 page_url = ''
 base_url = ''
@@ -40,7 +41,9 @@ def check_is_update(url):
 
 def download_img(href):
     # 这个网站的处理，没有分析出图片的地址是怎么保存的,用selenium处理
-    driver = webdriver.Firefox()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    driver = webdriver.Chrome(options=chrome_options)
     driver.get(href)
     url = driver.find_element_by_css_selector('.mh_comicpic>img').get_attribute('src')
     driver.close()
